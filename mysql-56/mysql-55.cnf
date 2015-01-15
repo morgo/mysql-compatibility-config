@@ -1,0 +1,79 @@
+# This file makes a MySQL 5.6 server behave more like a MySQL 5.5 server.
+# It restores the server's previous defaults.
+
+# Initial changes are described by James Day here:
+# https://blogs.oracle.com/supportingmysql/entry/server_defaults_changes_in_mysql
+
+back_log = 50
+binlog_checksum = NONE
+binlog-row-event-max-size = 1024
+flush_time = 1800
+host_cache_size = 128
+innodb_autoextend_increment	= 8
+innodb_buffer_pool_instances = 0
+innodb_concurrency_tickets = 500
+innodb_file_per_table = 0
+innodb_log_file_size = 5M
+innodb_old_blocks_time = 0
+innodb_open_files = 300
+innodb_purge_batch_size	= 20
+innodb_purge_threads = 0
+innodb_stats_on_meta_data = 1
+join_buffer_size = 128K
+max_allowed_packet = 1M
+max_connect_errors = 10
+# open_files_limit = 0 * see notes on link mentioned above.
+query_cache_size = 0
+query_cache_type = 1
+sort_buffer_size = 2M
+sql_mode = ""
+sync_master_info = 0
+sync_relay_log = 0
+sync_relay_log_info = 0
+table_definition_cache = 400
+table_open_cache = 400
+thread_cache_size = 0
+
+# MySQL 5.6 enables Performance Schema by default
+# It exists in 5.5, but is not enabled
+performance_schema = OFF
+
+# MySQL 5.6 forces the new password hash format by default.
+# MySQL 5.5 did not (warning: it is removed in MySQL 5.7)
+secure_auth = 0
+
+# The binary log can be asked to write v1 events (compatible with 5.5)
+# It doesn't by default.  Above we have also disabled CRC32 checksums
+log-bin-use-v1-row-events=1
+
+# MySQL 5.6 introduces persistent InnoDB stats.  For 5.5 compatibility
+# This needs to be disabled:
+innodb_stats_persistent = 0
+
+
+# @TODO:
+# Need to investigate:
+# - optimizer_switch behaviour to be compatible with 5.5
+# - eq_range_index_dive_limit (new feature)
+# - default_tmp_storage_engine
+# - disconnect_on_expired_password
+# - explicit_defaults_for_timestamp
+# - innodb_adaptive_flushing_lwm
+# - innodb_change_buffer_max_size
+# - innodb_compression_pad_pct_max
+# - innodb_compression_level
+# - innodb_sort_buffer_size
+# - innodb_stats_auto_recalc
+# - innodb_sync_array_size
+# - innodb_undo_logs
+# - max_seeks_for_key
+# - max_write_lock_count
+# - myisam_max_sort_file_size
+# - myisam_mmap_size
+# - metadata_locks_hash_instances
+# - slave_allow_batching
+# - slave_checkpoint_group
+# - slave_checkpoint_period
+# - slave_sql_verify_checksum
+# - sql_low_priority_updates
+# - sql_max_join_size
