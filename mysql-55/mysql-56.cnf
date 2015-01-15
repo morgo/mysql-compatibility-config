@@ -1,0 +1,74 @@
+# This file makes a MySQL 5.5 server behave more like a MySQL 5.6 server.
+# It turns on new settings (where possible) and can be used to prepare for upgrades.
+
+# Initial changes are described by James Day here:
+# https://blogs.oracle.com/supportingmysql/entry/server_defaults_changes_in_mysql
+
+# Backlog uses a formula in 5.6 (50 + ( max_connections / 5 ) capped at 900)
+# Using the default 151 max connections:
+back_log = 81
+
+binlog-row-event-max-size = 8K
+flush_time = 0
+#host_cache_size = 128 // @TODO
+
+innodb_autoextend_increment	= 64
+innodb_buffer_pool_instances = 8
+innodb_concurrency_tickets = 5000
+innodb_file_per_table = 1
+innodb_log_file_size = 48M
+innodb_old_blocks_time = 1000
+# innodb_open_files = 300
+
+innodb_purge_batch_size	= 300
+innodb_purge_threads = 1
+innodb_stats_on_meta_data = 0
+join_buffer_size = 256K
+max_allowed_packet = 1M
+max_connect_errors = 100
+open_files_limit = 5000
+query_cache_size = 1M 
+query_cache_type = 0
+sort_buffer_size = 256K
+sql_mode = "NO_ENGINE_SUBSTITUTION"
+sync_master_info = 10000
+sync_relay_log = 10000
+sync_relay_log_info = 10000
+
+#table_definition_cache = 400
+table_open_cache = 2000
+# thread_cache_size = 0
+
+# MySQL 5.6 enables Performance Schema by default
+# It exists in 5.5, but the overhead is higher.  For strict compatibility
+# This is being enabled here:
+performance_schema = ON
+
+# MySQL 5.6 forces the new password hash format by default.
+# MySQL 5.5 did not
+secure_auth = 1 
+
+# @TODO:
+# Need to investigate:
+# - optimizer_switch behaviour to be compatible with 5.6?
+# - default_tmp_storage_engine
+# - explicit_defaults_for_timestamp
+# - innodb_adaptive_flushing_lwm
+# - innodb_change_buffer_max_size
+# - innodb_compression_pad_pct_max
+# - innodb_compression_level
+# - innodb_sort_buffer_size
+# - innodb_stats_auto_recalc
+# - innodb_sync_array_size
+# - innodb_undo_logs
+# - max_seeks_for_key
+# - max_write_lock_count
+# - myisam_max_sort_file_size
+# - myisam_mmap_size
+# - metadata_locks_hash_instances
+# - slave_allow_batching
+# - slave_checkpoint_group
+# - slave_checkpoint_period
+# - slave_sql_verify_checksum
+# - sql_low_priority_updates
+# - sql_max_join_size
