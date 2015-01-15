@@ -1,0 +1,21 @@
+# This makes a MySQL 5.6 server behave similar to the new defaults
+# in MySQL 5.7
+
+# MySQL 5.7 enables more SQL modes by default, but also
+# merges ERROR_FOR_DIVISION_BY_ZERO, NO_ZERO_DATE, NO_ZERO_IN_DATE
+# into the definition of STRICT_TRANS_TABLES.
+# Context: http://dev.mysql.com/worklog/task/?id=7467
+
+sql-mode="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,ERROR_FOR_DIVISION_BY_ZERO, NO_ZERO_DATE, NO_ZERO_IN_DATE"
+
+# The optimizer changes the default from 10 dives to 200 dives by default
+# Context: http://mysqlserverteam.com/you-asked-for-it-new-default-for-eq_range_index_dive_limit/
+
+eq_range_index_dive_limit=200
+
+# MySQL 5.7 contains a new internal server logging API.
+# The setting log_warnings is deprecated in 5.7.2 in favour of log_error_verbosity.
+# *But* the default fo log_warnings also changes to 2 as well:
+
+log_warnings=2
+

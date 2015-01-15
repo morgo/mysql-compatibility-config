@@ -1,0 +1,23 @@
+# This configuration file helps make a MySQL 5.7 server behave
+# closer to the behavior of MySQL 5.6
+
+# MySQL 5.7 changes the definition of the STICT sql_mode to be more strict.
+# i.e. it also enables ERROR_FOR_DIVISION_BY_ZERO, NO_ZERO_DATE, NO_ZERO_IN_DATE
+# 5.6 also only had STRICT_TRANS_TABLES enabled in bundled configuration files,
+# and not as a server compiled default.
+
+sql-mode="NO_ENGINE_SUBSTITUTION"
+
+# The optimizer changes the default from 10 dives to 200 dives by default
+# Setting it back to 10 dives for compatibility
+# Context: http://mysqlserverteam.com/you-asked-for-it-new-default-for-eq_range_index_dive_limit/
+
+eq_range_index_dive_limit=10
+
+# MySQL 5.7 contains a new internal server logging API.
+# The setting log_warnings is deprecated in 5.7.2 in favour of log_error_verbosity.
+# *But* the default fo log_warnings also changes from 1 to 2.
+# Changing it back for compatibility...
+
+log_warnings=1
+
