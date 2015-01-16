@@ -65,7 +65,8 @@ timezone=GMT
 # The internet is utf8.  Setting this helps ensure that accented and foreign
 # characters are stored correctly.
 
-character-set-server=utf8mb4 and collation-server=utf8mb4_general_ci 
+character-set-server=utf8mb4
+collation-server=utf8mb4_general_ci 
 
 # Do not do a reverse lookup on connections coming into MySQL for authentication.
 # This is better for performance, but means that usernames can no longer contain
