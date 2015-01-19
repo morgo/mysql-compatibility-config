@@ -6,6 +6,8 @@
 
 # Backlog uses a formula in 5.6 (50 + ( max_connections / 5 ) capped at 900)
 # Using the default 151 max connections:
+[mysqld]
+
 back_log = 81
 
 binlog-row-event-max-size = 8K
@@ -16,13 +18,17 @@ innodb_autoextend_increment	= 64
 innodb_buffer_pool_instances = 8
 innodb_concurrency_tickets = 5000
 innodb_file_per_table = 1
-innodb_log_file_size = 48M
+
+# This option is commented out, since MySQL 5.5 can not restart normally
+# After the log file size has been changed.
+# innodb_log_file_size = 48M
+
 innodb_old_blocks_time = 1000
 # innodb_open_files = 300
 
 innodb_purge_batch_size	= 300
 innodb_purge_threads = 1
-innodb_stats_on_meta_data = 0
+innodb_stats_on_metadata = 0
 join_buffer_size = 256K
 max_allowed_packet = 1M
 max_connect_errors = 100

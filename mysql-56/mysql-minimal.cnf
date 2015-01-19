@@ -31,4 +31,3 @@ binlog_cache_size=4K
 binlog_stmt_cache_size=4K
 
 performance_schema=OFF
-

@@ -4,6 +4,8 @@
 # Initial changes are described by James Day here:
 # https://blogs.oracle.com/supportingmysql/entry/server_defaults_changes_in_mysql
 
+[mysqld]
+
 back_log = 50
 binlog_checksum = NONE
 binlog-row-event-max-size = 1024
@@ -18,7 +20,7 @@ innodb_old_blocks_time = 0
 innodb_open_files = 300
 innodb_purge_batch_size	= 20
 innodb_purge_threads = 0
-innodb_stats_on_meta_data = 1
+innodb_stats_on_metadata = 1
 join_buffer_size = 128K
 max_allowed_packet = 1M
 max_connect_errors = 10

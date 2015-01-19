@@ -1,6 +1,8 @@
 # This configuration file helps make a MySQL 5.7 server behave
 # closer to the behavior of MySQL 5.6
 
+[mysqld]
+
 # MySQL 5.7 changes the definition of the STICT sql_mode to be more strict.
 # i.e. it also enables ERROR_FOR_DIVISION_BY_ZERO, NO_ZERO_DATE, NO_ZERO_IN_DATE
 # 5.6 also only had STRICT_TRANS_TABLES enabled in bundled configuration files,

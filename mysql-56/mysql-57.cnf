@@ -1,12 +1,14 @@
 # This makes a MySQL 5.6 server behave similar to the new defaults
 # in MySQL 5.7
 
+[mysqld]
+
 # MySQL 5.7 enables more SQL modes by default, but also
 # merges ERROR_FOR_DIVISION_BY_ZERO, NO_ZERO_DATE, NO_ZERO_IN_DATE
 # into the definition of STRICT_TRANS_TABLES.
 # Context: http://dev.mysql.com/worklog/task/?id=7467
 
-sql-mode="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,ERROR_FOR_DIVISION_BY_ZERO, NO_ZERO_DATE, NO_ZERO_IN_DATE"
+sql-mode="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,ERROR_FOR_DIVISION_BY_ZERO,NO_ZERO_DATE,NO_ZERO_IN_DATE"
 
 # The optimizer changes the default from 10 dives to 200 dives by default
 # Context: http://mysqlserverteam.com/you-asked-for-it-new-default-for-eq_range_index_dive_limit/

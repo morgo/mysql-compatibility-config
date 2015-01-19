@@ -3,13 +3,14 @@
 # prior to 5.7-GA, this offers an opportunity to test compatibility
 # in advance.
 
+[mysqld]
 
 # 5.7 proposes to enable row based replication by default, along
 # with changing the isolation level to read-committed.  Discussion
 # at: http://www.tocker.ca/2015/01/14/proposal-to-change-replication-and-innodb-settings-in-mysql-5-7.html
 
 binlog_format=ROW
-tx_isolation=READ-COMMITTED
+transaction_isolation=READ-COMMITTED
 innodb_autoinc_lock_mode=2
 
 
