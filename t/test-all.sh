@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# This script uses MySQL::Sandbox to perform a fresh install of MySQL
+# from a tarball, and then try to start it with each of the 
+# configuration files in this project.
+
 MYSQL_55_BINARY="mysql-5.5.41-osx10.9-x86_64.tar.gz"
 MYSQL_56_BINARY="mysql-5.6.22-osx10.9-x86_64.tar.gz"
 MYSQL_57_BINARY="mysql-5.7.5-m15-osx10.8-x86_64.tar.gz"
