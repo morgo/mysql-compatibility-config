@@ -24,6 +24,7 @@ innodb_log_file_size = 128M             # Larger redo log files have better perf
 innodb_buffer_pool_dump_at_shutdown = 1 # Faster restarts
 innodb_buffer_pool_dump_pct = 20        # Faster restarts
 innodb_file_format = Barracuda	        # Allows new features such as compression
+innodb_large_prefix = 1			# Allows larger indexes
 
 transaction_isolation = READ-COMMITTED           # Performance (requires Row-based Replication)
 innodb_autoinc_lock_mode = 2            # "Interleaved" (requires Row-based Replication)
