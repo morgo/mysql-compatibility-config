@@ -1,58 +1,89 @@
-# This file makes a MySQL 5.5 server behave more like a MySQL 5.6 server.
-# It turns on new settings (where possible) and can be used to prepare for upgrades.
-
-# Initial changes are described by James Day here:
+# This configuration file makes a MySQL 5.5 server behave like a MySQL 5.6 server.
+# This allows you to prepare for new default settings that are enabled
+# by default in 5.6+, and may assist in upgrades.
+#
+# Most of the changes to configuration are documented here:
 # https://blogs.oracle.com/supportingmysql/entry/server_defaults_changes_in_mysql
 
-# Backlog uses a formula in 5.6 (50 + ( max_connections / 5 ) capped at 900)
-# Using the default 151 max connections:
 [mysqld]
 
-back_log = 81
+##################################################################
+# InnoDB Settings
+# http://dev.mysql.com/doc/refman/5.5/en/innodb-parameters.html
+###################################################################
 
-binlog-row-event-max-size = 8K
-flush_time = 0
-#host_cache_size = 128 // @TODO
+innodb_autoextend_increment	= 64  # Increase ibdata1 64MB at a time
+innodb_buffer_pool_instances = 8  # Performance
+innodb_concurrency_tickets = 5000 # Performance
+innodb_file_per_table = 1         # Easier Management
+innodb_purge_batch_size	= 300     # Performance
+innodb_purge_threads = 1          # Performance
+innodb_stats_on_metadata = 0      # Prevents ANALYZE implicitly being run
+innodb_old_blocks_time = 1000     # Reduces side-impact of tablescans
 
-innodb_autoextend_increment	= 64
-innodb_buffer_pool_instances = 8
-innodb_concurrency_tickets = 5000
-innodb_file_per_table = 1
-
-# This option is commented out, since MySQL 5.5 can not restart normally
-# After the log file size has been changed.
+# This option is commented out only because  MySQL 5.5 can not restart normally
+# After the log file size has been changed.  It is recommended to follow the advice
+# in this blog post to increase it:
+# http://www.percona.com/blog/2011/07/09/how-to-change-innodb_log_file_size-safely/
 # innodb_log_file_size = 48M
 
-innodb_old_blocks_time = 1000
-# innodb_open_files = 300
+##########################################################################
+# Replication Settings 
+# http://dev.mysql.com/doc/refman/5.5/en/replication-options-slave.html
+# http://dev.mysql.com/doc/refman/5.5/en/replication-options-master.html
+##########################################################################
 
-innodb_purge_batch_size	= 300
-innodb_purge_threads = 1
-innodb_stats_on_metadata = 0
-join_buffer_size = 256K
-max_allowed_packet = 1M
-max_connect_errors = 100
-open_files_limit = 5000
-query_cache_size = 1M 
-query_cache_type = 0
-sort_buffer_size = 256K
-sql_mode = "NO_ENGINE_SUBSTITUTION"
+binlog-row-event-max-size = 8K
 sync_master_info = 10000
 sync_relay_log = 10000
 sync_relay_log_info = 10000
 
-#table_definition_cache = 400
-table_open_cache = 2000
-# thread_cache_size = 0
+####################
+# General Behavior #
+####################
 
-# MySQL 5.6 enables Performance Schema by default
-# It exists in 5.5, but the overhead is higher.  For strict compatibility
-# This is being enabled here:
+# The new password format was first available in MySQL 4.1, but not
+# all mysql drivers supported it.
+# MySQL 5.6 disallows the old password format by default (secure_auth=1).
+# MySQL 5.7 removes all support for the old password format.
+
+secure_auth = 1 
+
+# MySQL 5.6 is the first version to disable the query cache by default.
+# Previous versions of MySQL often had it enabled, but with 0M allocated
+# to it.  In many cases this will effectively mean zero change.
+
+query_cache_size = 1M 
+query_cache_type = 0
+
+# MySQL 5.6 enables the NO_ENGINE_SUBSTITUTION sql mode as a compiled default.
+# In many of the configuration files that shipped with MySQL 5.6, the STRICT_TRANS_TABLES
+# SQL mode was also enabled (but this was not a compiled default).
+
+sql_mode = "NO_ENGINE_SUBSTITUTION"
+
+# The performance_schema is enabled by default in MySQL 5.6.
+# In MySQL 5.6, overhead for performance schema is much lower, and the
+# number of performance_schema tables is much higher.
+# The 5.5 version of performance_schema is mainly only useful to MySQL developers.
+
 performance_schema = ON
 
-# MySQL 5.6 forces the new password hash format by default.
-# MySQL 5.5 did not
-secure_auth = 1 
+# MySQL 5.6 tunes many various buffers and caches to be larger for performance
+# These do not usually result in a large change of behaviour.
+# Some of these settings now "auto-size".  For simplicity, the auto-sized values
+# of a default 5.6 installation are used.
+
+back_log = 81
+flush_time = 0
+join_buffer_size = 256K
+max_allowed_packet = 1M
+max_connect_errors = 100
+open_files_limit = 5000
+sort_buffer_size = 256K
+table_definition_cache = 1400
+table_open_cache = 2000
+thread_cache_size = 10
 
 # @TODO:
 # Need to investigate:

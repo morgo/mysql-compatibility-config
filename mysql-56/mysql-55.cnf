@@ -52,12 +52,21 @@ log-bin-use-v1-row-events=1
 # This needs to be disabled:
 innodb_stats_persistent = 0
 
+# The optimizer_switch says which optimizations should be used by the
+# optimizer.  MySQL 5.6 contains a number of enhancements, but since
+# "two wrongs can make a right", all the new enhancements are disabled
+# for 5.5 compatibility:
+
+optimizer_switch="index_merge=on,index_merge_union=on,index_merge_sort_union=on,index_merge_intersection=on,engine_condition_pushdown=on,index_condition_pushdown=off,mrr=off,mrr_cost_based=off,block_nested_loop=off,batched_key_access=off,materialization=off,semijoin=off,loosescan=off,firstmatch=off,subquery_materialization_cost_based=off,use_index_extensions=off"
+
+# Disable index statistics in place of index dives
+# (5.6 new feature)
+
+eq_range_index_dive_limit=0
+
 
 # @TODO:
 # Need to investigate:
-# - optimizer_switch behaviour to be compatible with 5.5
-# - eq_range_index_dive_limit (new feature)
-# - default_tmp_storage_engine
 # - disconnect_on_expired_password
 # - explicit_defaults_for_timestamp
 # - innodb_adaptive_flushing_lwm
@@ -77,5 +86,3 @@ innodb_stats_persistent = 0
 # - slave_checkpoint_group
 # - slave_checkpoint_period
 # - slave_sql_verify_checksum
-# - sql_low_priority_updates
-# - sql_max_join_size
