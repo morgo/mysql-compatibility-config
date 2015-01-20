@@ -88,3 +88,20 @@ skip-name-resolve
 
 max-connect-errors=100000
 
+# The query cache is disabled by default, but allocates 1M of memory.
+# This sets the memory to 0M
+
+query-cache-size=0
+
+# For most modern applications, a 2 second query is already a magnitude higher
+# than the average query.  The default in MySQL is 10 seconds.
+
+long_query_time=2
+
+# Queries that do not use any indexes will likely degrade in performance as
+# data grows or can no longer fit in memory.  For this reason we should
+# log them to the slow query log even if they do not exceed 2 seconds.
+# That is unless they examine less than 100 rows.
+
+log-queries-not-using-indexes=1
+min-examined-row-limit=100
