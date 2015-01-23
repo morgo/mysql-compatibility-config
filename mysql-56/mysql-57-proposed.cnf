@@ -2,14 +2,18 @@
 # in MySQL 5.7 + the defaults which have been proposed for 5.7, but
 # are not currently changed.
 
+[mysql]
+prompt="\u@\h [\d] > "
+
 [mysqld]
 
 # MySQL 5.7 enables more SQL modes by default, but also
 # merges ERROR_FOR_DIVISION_BY_ZERO, NO_ZERO_DATE, NO_ZERO_IN_DATE
 # into the definition of STRICT_TRANS_TABLES.
 # Context: http://dev.mysql.com/worklog/task/?id=7467
+# NO_AUTO_CREATE_USER is proposed (not currently the default)
 
-sql-mode="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,ERROR_FOR_DIVISION_BY_ZERO,NO_ZERO_DATE,NO_ZERO_IN_DATE"
+sql-mode="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,ERROR_FOR_DIVISION_BY_ZERO,NO_ZERO_DATE,NO_ZERO_IN_DATE,NO_AUTO_CREATE_USER"
 
 # The optimizer changes the default from 10 dives to 200 dives by default
 # Context: http://mysqlserverteam.com/you-asked-for-it-new-default-for-eq_range_index_dive_limit/
@@ -22,12 +26,34 @@ eq_range_index_dive_limit=200
 
 log_warnings=2
 
-# 5.7 proposes to enable row based replication by default, along
-# with changing the isolation level to read-committed.  Discussion
+# 5.7 proposes to enable row based replication by default.
 # at: http://www.tocker.ca/2015/01/14/proposal-to-change-replication-and-innodb-settings-in-mysql-5-7.html
 
 binlog_format=ROW
-transaction-isolation=READ-COMMITTED
 innodb_autoinc_lock_mode=2
 
+# 5.7 proposes to change these additional defaults:
 
+innodb_checksum_algorithm=crc32
+innodb_purge_threads=4
+innodb_strict_mode=1
+innodb_log_file_size=128M
+
+# In MySQL 5.7 only 20% of the pool will be dumped, 
+# But 5.6 does not support this option
+innodb_buffer_pool_dump_at_shutdown=1
+
+innodb_file_format= Barracuda
+innodb_large_prefix=1
+sync_binlog=1
+slave_net_timeout=60
+
+# These two options will be renamed in 5.6.23 (not yet released)
+# Including the new name (commented out), and the old name:
+#binlog_error_action=ABORT_SERVER
+#binlog_gtid_recovery_simplified=1
+binlogging_impossible_mode=ABORT_SERVER
+simplified_binlog_gtid_recovery=1
+
+# Enable additional P_S consumers by default
+performance-schema-consumer-events_statements_history=ON

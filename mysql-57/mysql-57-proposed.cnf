@@ -3,14 +3,41 @@
 # prior to 5.7-GA, this offers an opportunity to test compatibility
 # in advance.
 
+[mysql]
+prompt="\u@\h [\d] > "
+
 [mysqld]
 
-# 5.7 proposes to enable row based replication by default, along
-# with changing the isolation level to read-committed.  Discussion
-# at: http://www.tocker.ca/2015/01/14/proposal-to-change-replication-and-innodb-settings-in-mysql-5-7.html
+# 5.7 proposes to enable row based replication by default
+# http://www.tocker.ca/2015/01/14/proposal-to-change-replication-and-innodb-settings-in-mysql-5-7.html
 
 binlog_format=ROW
-transaction_isolation=READ-COMMITTED
 innodb_autoinc_lock_mode=2
 
+# Additional proposed
+innodb_checksum_algorithm=crc32
+innodb_page_cleaners=4
+innodb_purge_threads=4
+innodb_strict_mode=1
+innodb_log_file_size=128M
+innodb_buffer_pool_dump_at_shutdown=1
+innodb_buffer_pool_dump_pct=20
+innodb_file_format= Barracuda
+innodb_large_prefix=1
+sync_binlog=1
+slave_net_timeout=60
+
+# These two options will be renamed in 5.7.6.  Including the new names
+# as commented out, and the old names:
+#binlog_error_action=ABORT_SERVER
+#binlog_gtid_recovery_simplified=1
+binlogging_impossible_mode=ABORT_SERVER
+simplified_binlog_gtid_recovery=1
+
+# 5.7 proposal is to add NO_AUTO_CREATE_USER to the SQL Modes
+sql-mode="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,NO_AUTO_CREATE_USER"
+
+# Enable additional P_S consumers by default
+performance-schema-consumer-events_statements_history=ON
+performance-schema-consumer-events_transactions_history=ON
 

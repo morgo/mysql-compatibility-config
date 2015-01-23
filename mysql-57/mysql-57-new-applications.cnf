@@ -9,6 +9,11 @@
 # Requires timezone DB installation
 # timezone=GMT
 
+[mysql]
+
+# Change the prompt of the MySQL client to be more useful
+prompt="\u@\h [\d] > "
+
 [mysqld]
 
 ##################################################################
