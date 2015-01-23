@@ -42,6 +42,7 @@ innodb_log_file_size=128M
 # In MySQL 5.7 only 20% of the pool will be dumped, 
 # But 5.6 does not support this option
 innodb_buffer_pool_dump_at_shutdown=1
+innodb_buffer_pool_load_at_startup=1
 
 innodb_file_format= Barracuda
 innodb_large_prefix=1
