@@ -33,6 +33,7 @@ binlog_format=ROW
 innodb_autoinc_lock_mode=2
 
 # 5.7 proposes to change these additional defaults:
+# http://www.tocker.ca/2015/01/23/proposal-to-change-additional-defaults-in-mysql-5-7.html
 
 innodb_checksum_algorithm=crc32
 innodb_purge_threads=4
