@@ -4,14 +4,18 @@
 
 [mysqld_safe]
 
-# A best practice is to set all servers to GMT, and in the presentation
-# layer customize times for users
-# Requires timezone DB installation
-# timezone=GMT
+# A best practice is to set all servers to GMT, and in the application
+# customize time display for the user.  This is commented out because
+# timezone support must be installed first:
+# http://dev.mysql.com/doc/refman/5.7/en/mysql-tzinfo-to-sql.html
+
+default-time-zone = GMT
 
 [mysql]
 
 # Change the prompt of the MySQL client to be more useful
+# This has been proposed for MySQL 5.7
+
 prompt="\u@\h [\d] > "
 
 [mysqld]
@@ -21,22 +25,34 @@ prompt="\u@\h [\d] > "
 # http://dev.mysql.com/doc/refman/5.7/en/innodb-parameters.html
 ###################################################################
 
+# These settings have been proposed as defaults for MySQL 5.7
+
 innodb_checksum_algorithm = crc32       # Provides CPU accelerated checksum computation
 innodb_page_cleaners = 4                # Improves InnoDB background work performance
 innodb_purge_threads = 4                # Improves InnoDB internal cleanup performance
 innodb_strict_mode = ON                 # Guards better against typos and syntax errors
 innodb_log_file_size = 128M             # Larger redo log files have better performance
 innodb_buffer_pool_dump_at_shutdown = 1 # Faster restarts
-innodb_buffer_pool_dump_pct = 20        # Faster restarts
-innodb_file_format = Barracuda	        # Allows new features such as compression
-innodb_large_prefix = 1			# Allows larger indexes
-
-transaction_isolation = READ-COMMITTED           # Performance (requires Row-based Replication)
+innodb_buffer_pool_dump_pct = 25        # Faster restarts
+innodb_file_format = Barracuda          # Allows new features such as compression
+innodb_large_prefix = 1                 # Allows larger indexes
 innodb_autoinc_lock_mode = 2            # "Interleaved" (requires Row-based Replication)
 
-# These settings can only be enabled on initialization
+# This setting is suitable for new applications
+# It improves performance, but is unsafe for existing applications
+
+transaction_isolation = READ-COMMITTED  # Performance (requires Row-based Replication)
+
+# These settings are commented out because they can only be set
+# before MySQL starts for the first time.  They are quite helpful,
+# since space can automatically be reclaimed.
+# More information:
+# http://dev.mysql.com/doc/refman/5.7/en/innodb-paramet
+#  ers.html#sysvar_innodb_undo_log_truncate
+# 
 # innodb_undo_tablespaces = 4
-# @config around undo truncation
+# innodb_undo_log_truncate = 1
+#
 
 ##################################################################
 # Replication Settings 
@@ -46,19 +62,19 @@ innodb_autoinc_lock_mode = 2            # "Interleaved" (requires Row-based Repl
 
 # Server ID is required to be set for Binary Logging to be enabled
 # It must also be unique, so may need to be overwritten later.
+
 server-id=1
 
-log-bin=1                              # Enable Binary Logging
-binlog-format=ROW                      # Safe for all statements
-binlog_rows_query_log_events=ON        # Include queries for debugging
+log-bin                                 # Enable Binary Logging
+binlog-format=ROW                       # Safe for all statements
+binlog_rows_query_log_events=ON         # Include queries for debugging
+
 # introduced in 5.7.6 (not yet released)
-# binlog_error_action = ABORT_SERVER     # Safest option
-slave_parallel_type = LOGICAL_CLOCK    # Performance
-slave_parallel_workers = 4             # Performance
-log_slave_updates = 1                  # Allows topology changes
+
+slave_parallel_type = LOGICAL_CLOCK     # Performance
+slave_parallel_workers = 4              # Performance
+log_slave_updates = 1                   # Allows topology changes
 gtid_mode = ON                          # Allows topology changes
-# Introduced 5.7.6:
-# binlog_gtid_recovery_simplified = 1    # Performance
 enforce_gtid_consistency = 1           # Safety.  Disallows some statements.
 sync_binlog = 1                        # Safety
 master-info-repository = TABLE         # Safety
@@ -67,6 +83,13 @@ relay_log_recovery = ON                # Safety
 slave_net_timeout = 60                 # Faster failure detection
 binlog_row_image = MINIMAL             # Requires less space
 expire_logs_days=10                    # Cleanup binlogs after 10 days
+
+# These options are commented out because they will be introduced
+# In MySQL 5.7.6 (not yet released)
+#
+# binlog_error_action = ABORT_SERVER   # Safest option
+# binlog_gtid_recovery_simplified = 1  # Performance
+
 
 ####################
 # General Behavior #
@@ -110,3 +133,10 @@ long_query_time=2
 
 log-queries-not-using-indexes=1
 min-examined-row-limit=100
+
+# Timestamps currently default to using the NOW() value.  This behaviour
+# may be removed in a future version, so for new applications it is
+# best to disable it now.
+#http://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_explicit_defaults_for_timestamp
+
+explicit_defaults_for_timestamp = 1 
