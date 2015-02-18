@@ -1,0 +1,37 @@
+# This configuration file changes MySQL to use unsafe defaults which
+# may be better for performance.  It is not recommended for general use,
+# but may have some advantages in automated testing etc.
+
+[mysqld]
+
+# Don't flush any buffers on commit
+# These usually provide the greatest performance enhancement
+# over regular configuration
+
+sync_frm=0
+sync_binlog=0
+innodb-flush-log-at-trx-commit=0
+
+# Double write buffer is a corruption repair mechanism
+# Its overhead can be quite high
+
+innodb-doublewrite=0
+
+# Don't guarantee consistency between binary log and InnoDB
+
+innodb_support_xa=0
+
+# Don't write checksums to pages to detect corruption introduced
+# by faulty (or lying) hardware
+
+innodb_checksum_algorithm=none
+
+# Adaptive flushing is designed to avoid sudden bursts of IO that make
+# responses inconsistent.  This configuration is designed for automated testing
+# and max throughput
+
+innodb_adaptive_flushing=OFF
+
+# This setting may be behavior changing, and is commented out.
+# But it may help improve throughput with read-committed isolation
+# innodb_autoinc_lock_mode=2
