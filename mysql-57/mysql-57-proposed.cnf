@@ -5,6 +5,7 @@
 
 [mysql]
 prompt="\u@\h [\d] > "
+show_warnings
 
 [mysqld]
 
@@ -30,12 +31,13 @@ innodb_large_prefix=1
 sync_binlog=1
 slave_net_timeout=60
 
-# These two options will be renamed in 5.7.6.  Including the new names
-# as commented out, and the old names:
-#binlog_error_action=ABORT_SERVER
-#binlog_gtid_recovery_simplified=1
-binlogging_impossible_mode=ABORT_SERVER
-simplified_binlog_gtid_recovery=1
+# These two options had different names in previous versions
+# (binlogging_impossible_mode,simplified_binlog_gtid_recovery)
+# This config file targets 5.7.6+, but includes the 'loose' modifier to not fail
+# prior versions.
+
+loose-binlog_error_action=ABORT_SERVER
+loose-binlog_gtid_recovery_simplified=1
 
 # 5.7 proposal is to add NO_AUTO_CREATE_USER to the SQL Modes
 sql-mode="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,NO_AUTO_CREATE_USER"
@@ -43,4 +45,18 @@ sql-mode="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,NO_AUTO_
 # Enable additional P_S consumers by default
 performance-schema-consumer-events_statements_history=ON
 performance-schema-consumer-events_transactions_history=ON
+
+# slow logging changes
+log_slow_admin_statements=1
+log_slow_slave_statements=1
+long-query-time=2
+log-queries-not-using-indexes=1
+min-examined-row-limit=1000
+
+# default buffer sizes
+group_concat_max_len=1M
+max_allowed_packet=64M
+
+# security
+symbolic-links=0
 
