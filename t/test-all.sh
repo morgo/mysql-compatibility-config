@@ -4,9 +4,9 @@
 # from a tarball, and then try to start it with each of the 
 # configuration files in this project.
 
-MYSQL_55_BINARY="mysql-5.5.41-osx10.9-x86_64.tar.gz"
-MYSQL_56_BINARY="mysql-5.6.22-osx10.9-x86_64.tar.gz"
-MYSQL_57_BINARY="mysql-5.7.5-m15-osx10.8-x86_64.tar.gz"
+MYSQL_55_BINARY="mysql-5.5.45-osx10.9-x86_64.tar.gz"
+MYSQL_56_BINARY="mysql-5.6.26-osx10.9-x86_64.tar.gz"
+MYSQL_57_BINARY="mysql-5.7.8-rc-osx10.9-x86_64.tar.gz"
 
 CURRENT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 cd $CURRENT_DIR

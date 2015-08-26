@@ -3,10 +3,10 @@
 
 [mysqld]
 
-# MySQL 5.7 changes the definition of the STICT sql_mode to be more strict.
-# i.e. it also enables ERROR_FOR_DIVISION_BY_ZERO, NO_ZERO_DATE, NO_ZERO_IN_DATE
+# MySQL 5.7 enables STRICT_TRANS_TABLES, NO_AUTO_CREATE_USER, 
+# ERROR_FOR_DIVISION_BY_ZERO, NO_ZERO_DATE, NO_ZERO_IN_DATE
 # 5.6 also only had STRICT_TRANS_TABLES enabled in bundled configuration files,
-# and not as a server compiled default.
+# but not as a server compiled default.
 
 sql-mode="NO_ENGINE_SUBSTITUTION"
 
@@ -29,4 +29,36 @@ log_warnings=1
 
 optimizer_switch="index_merge=on,index_merge_union=on,index_merge_sort_union=on,index_merge_intersection=on,engine_condition_pushdown=on,index_condition_pushdown=on,mrr=on,mrr_cost_based=on,block_nested_loop=on,batched_key_access=off,materialization=on,semijoin=on,loosescan=on,firstmatch=on,subquery_materialization_cost_based=on,use_index_extensions=on,condition_fanout_filter=off"
 
+# Some information_schema tables have moved to performance_schema.
+# It is possible to enable compatibility to have them back.
 
+show_compatibility_56=1
+
+# 5.7 changes a number of replication defaults
+# http://mysqlhighavailability.com/replication-defaults-in-mysql-5-7-7/
+
+binlog_gtid_simple_recovery=0
+binlog-format=statement
+binlog_error_action=IGNORE_ERROR
+sync_binlog=0
+slave_net_timeout=3600
+
+# 5.7 InnoDB Defaults
+# http://mysqlserverteam.com/improved-server-defaults-in-5-7/
+innodb_checksum_algorithm=innodb
+innodb_page_cleaners=1
+innodb_purge_threads=1
+innodb_strict_mode=0
+innodb_buffer_pool_dump_at_shutdown=0
+innodb_buffer_pool_load_at_startup=0
+innodb_file_format=Antelope
+innodb_large_prefix=0
+
+# Disable PS options enabled by default
+# events_statements_history and  events_transactions_history
+
+performance-schema-consumer-events_statements_history=OFF
+performance-schema-consumer-events_transactions_history=OFF
+
+# Misc
+table_open_cache_instances=1

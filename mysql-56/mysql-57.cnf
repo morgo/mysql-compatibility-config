@@ -3,10 +3,7 @@
 
 [mysqld]
 
-# MySQL 5.7 enables more SQL modes by default, but also
-# merges ERROR_FOR_DIVISION_BY_ZERO, NO_ZERO_DATE, NO_ZERO_IN_DATE
-# into the definition of STRICT_TRANS_TABLES.
-# Context: http://dev.mysql.com/worklog/task/?id=7467
+# MySQL 5.7 enables more SQL modes by default.
 
 sql-mode="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,ERROR_FOR_DIVISION_BY_ZERO,NO_ZERO_DATE,NO_ZERO_IN_DATE"
 
@@ -34,7 +31,7 @@ slave_net_timeout=60
 innodb_strict_mode=1
 innodb_file_format=Barracuda
 innodb_large_prefix=1
-innodb_purge_threads=4 # coming in 5.7.8
+innodb_purge_threads=4
 innodb_checksum_algorithm=crc32
 
 # In MySQL 5.7 only 20% of the pool will be dumped, 
@@ -44,14 +41,10 @@ innodb_buffer_pool_dump_at_shutdown=1
 innodb_buffer_pool_load_at_startup=1
 
 # These two options had different names in previous versions
-# (binlogging_impossible_mode,simplified_binlog_gtid_recovery)
-# This config file targets 5.6.23+, but includes the 'loose' modifier to not fail
-# prior versions.
 
-loose-binlog_error_action=ABORT_SERVER
-loose-binlog_gtid_recovery_simplified=1
+binlog_error_action=ABORT_SERVER
+binlog_gtid_simple_recovery=1
 
 # 5.7 enable additional P_S consumers by default
 # This one is supported in 5.6 as well.
 performance-schema-consumer-events_statements_history=ON
-

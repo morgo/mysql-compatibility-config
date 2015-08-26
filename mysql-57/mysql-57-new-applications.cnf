@@ -83,25 +83,12 @@ relay_log_recovery = ON                # Safety
 slave_net_timeout = 60                 # Faster failure detection
 binlog_row_image = MINIMAL             # Requires less space
 expire_logs_days=10                    # Cleanup binlogs after 10 days
-
-# These options are commented out because they will be introduced
-# In MySQL 5.7.6 (not yet released)
-#
-# binlog_error_action = ABORT_SERVER   # Safest option
-# binlog_gtid_recovery_simplified = 1  # Performance
-
+binlog_error_action = ABORT_SERVER   # Safest option
+binlog_gtid_simple_recovery=1          # performance
 
 ####################
 # General Behavior #
 ####################
-
-# Add No auto create user (security) to the sql modes that default
-# to MySQL 5.7:
-
-sql-mode="STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,ONLY_FULL_GROUP_BY,NO_AUTO_CREATE_USER"
-
-# Turn of MySQL 5.6 compatibility
-show_compatibility_56=off
 
 # The internet is utf8.  Setting this helps ensure that accented and foreign
 # characters are stored correctly.
