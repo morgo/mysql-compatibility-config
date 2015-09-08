@@ -54,6 +54,9 @@ innodb_buffer_pool_load_at_startup=0
 innodb_file_format=Antelope
 innodb_large_prefix=0
 
+# 5.7.9
+loose-innodb_default_row_format=compact
+
 # Disable PS options enabled by default
 # events_statements_history and  events_transactions_history
 
@@ -62,3 +65,10 @@ performance-schema-consumer-events_transactions_history=OFF
 
 # Misc
 table_open_cache_instances=1
+
+# Dont expire passwords
+default_password_lifetime=0
+
+# Use MyISAM for optimizer temp tables instead of InnoDB
+internal_tmp_disk_storage_engine=MyISAM
+

@@ -64,6 +64,9 @@ optimizer_switch="index_merge=on,index_merge_union=on,index_merge_sort_union=on,
 
 eq_range_index_dive_limit=0
 
+# New option to 5.6.24
+avoid_temporal_upgrade=1
+
 
 # @TODO:
 # Need to investigate:
