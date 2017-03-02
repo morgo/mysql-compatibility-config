@@ -5,7 +5,7 @@
 
 # MySQL 5.7 enables more SQL modes by default.
 
-sql-mode="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,ERROR_FOR_DIVISION_BY_ZERO,NO_ZERO_DATE,NO_ZERO_IN_DATE"
+sql_mode="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,ERROR_FOR_DIVISION_BY_ZERO,NO_ZERO_DATE,NO_ZERO_IN_DATE"
 
 # The optimizer changes the default from 10 dives to 200 dives by default
 # Context: http://mysqlserverteam.com/you-asked-for-it-new-default-for-eq_range_index_dive_limit/
@@ -34,7 +34,7 @@ innodb_large_prefix=1
 innodb_purge_threads=4
 innodb_checksum_algorithm=crc32
 
-# In MySQL 5.7 only 20% of the pool will be dumped, 
+# In MySQL 5.7 only 20% of the pool will be dumped,
 # But 5.6 does not support this option
 
 innodb_buffer_pool_dump_at_shutdown=1

@@ -3,12 +3,12 @@
 
 [mysqld]
 
-# MySQL 5.7 enables STRICT_TRANS_TABLES, NO_AUTO_CREATE_USER, 
+# MySQL 5.7 enables STRICT_TRANS_TABLES, NO_AUTO_CREATE_USER,
 # ERROR_FOR_DIVISION_BY_ZERO, NO_ZERO_DATE, NO_ZERO_IN_DATE
 # 5.6 also only had STRICT_TRANS_TABLES enabled in bundled configuration files,
 # but not as a server compiled default.
 
-sql-mode="NO_ENGINE_SUBSTITUTION"
+sql_mode="NO_ENGINE_SUBSTITUTION"
 
 # The optimizer changes the default from 10 dives to 200 dives by default
 # Setting it back to 10 dives for compatibility
@@ -71,4 +71,3 @@ default_password_lifetime=0
 
 # Use MyISAM for optimizer temp tables instead of InnoDB
 internal_tmp_disk_storage_engine=MyISAM
-
